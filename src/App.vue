@@ -1,5 +1,13 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from "vue-router";
+import {ref, onMounted} from "vue";
+import { auth } from "@/js/firebase";
+
+const user = ref(null)
+
+onMounted(() => {
+  // user.value = auth.currentUser  Adding authentication here to change things such as logout and hide things when not logged in
+})
 </script>
 
 <template>
@@ -11,6 +19,7 @@ import { RouterLink, RouterView } from "vue-router";
           <RouterLink to="/about">About</RouterLink>
           <RouterLink to="/login">Login</RouterLink>
           <RouterLink to="/register">Register</RouterLink>
+          <RouterLink to="/profile">Profile</RouterLink>
         </nav>
       </div>
     </header>
