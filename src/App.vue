@@ -1,14 +1,22 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from "vue-router";
-import {ref, onMounted} from "vue";
+import { ref, onMounted } from 'vue';
 import { auth } from "@/js/firebase";
+import type { User } from "firebase/auth"; // Import the User type definition
 
-const user = ref(null)
+const user = ref<User | null>(null); // Define user as a ref that can hold a User object or null
 
 onMounted(() => {
-  // user.value = auth.currentUser  Adding authentication here to change things such as logout and hide things when not logged in
-})
+  auth.onAuthStateChanged((u) => {
+    user.value = u; // Correctly assign the user object or null to user.value
+  });
+});
+
+const logout = () => {
+  auth.signOut();
+};
 </script>
+
 
 <template>
   <div id="layout">
@@ -17,9 +25,12 @@ onMounted(() => {
         <nav>
           <RouterLink to="/">Home</RouterLink>
           <RouterLink to="/about">About</RouterLink>
-          <RouterLink to="/login">Login</RouterLink>
-          <RouterLink to="/register">Register</RouterLink>
-          <RouterLink to="/profile">Profile</RouterLink>
+          <RouterLink to="/search" v-if="user">Search</RouterLink>
+          <RouterLink to="/matches" v-if="user">Matches</RouterLink>
+          <RouterLink to="/profile" v-if="user">Profile</RouterLink>
+          <RouterLink to="/login" v-if="!user">Login</RouterLink>
+          <button v-if="user" @click="logout">Logout</button>
+          <RouterLink to="/register" v-if="!user">Register</RouterLink>
         </nav>
       </div>
     </header>
@@ -27,6 +38,7 @@ onMounted(() => {
 
   <RouterView />
 </template>
+
 
 <style scoped>
 #layout {
@@ -64,3 +76,5 @@ nav a.router-link-exact-active {
   background-color: #d0f0d0;
 }
 </style>
+
+

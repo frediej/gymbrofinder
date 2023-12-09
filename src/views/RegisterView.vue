@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
+import {reactive } from 'vue'
 import { auth } from '@/js/firebase'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
+import {db} from '@/js/firebase'
 import router from '@/router/index.js'
+import { doc, setDoc, collection } from "firebase/firestore";
 
 const formData = reactive({
   email: '',
@@ -36,8 +38,28 @@ async function submitForm() {
   formData.isLoading = true;
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
-    console.log(userCredential);
-    router.push('/');
+    const userRef = doc(db, 'users', userCredential.user.uid);
+    await setDoc(userRef, {
+      email: formData.email,
+      location: '',
+      gender: '',
+      age: '',
+      daysPerWeek: '',
+      benchWeight: '',
+      deadliftWeight: '',
+      squatWeight: '',
+      workoutDuration: '',
+      goals: ''
+    });
+
+    const matchesRef = doc(collection(userRef, 'matches'), 'placeholder');
+    await setDoc(matchesRef, { initialized: true });
+    const rejectsRef = doc(collection(userRef, 'rejects'), 'placeholder');
+    await setDoc(rejectsRef, { initialized: true });
+
+
+    await router.push('/profile');
+    alert("You have successfully registered! Please fill out your profile to begin matching with others!")
   } catch (error: any) {
     formData.errorMessage = error.message ?? 'An unexpected error occurred.';
   } finally {
