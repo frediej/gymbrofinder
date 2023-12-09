@@ -13,7 +13,7 @@ const router = createRouter({
         {
             path: '/about',
             name: 'about',
-            component: () => import('../views/AboutView.vue')
+            component: () => import('@/views/AboutView.vue')
         },
         {
             path: '/register',
@@ -27,8 +27,8 @@ const router = createRouter({
         },
         {
             path: '/profile',
-            name: 'profile',
-            component: () => import('../views/ProfileView.vue'),
+            name: 'ProfileView',
+            component: () => import('@/views/ProfileView.vue'),
             meta: {requiresAuth: true}
         },
         {
