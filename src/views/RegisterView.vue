@@ -3,8 +3,10 @@ import {reactive } from 'vue'
 import { auth } from '@/js/firebase'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import {db} from '@/js/firebase'
-import router from '@/router/index.js'
 import { doc, setDoc, collection } from "firebase/firestore";
+import {useRouter} from "vue-router";
+
+const router = useRouter();
 
 const formData = reactive({
   email: '',
@@ -41,6 +43,7 @@ async function submitForm() {
     const userRef = doc(db, 'users', userCredential.user.uid);
     await setDoc(userRef, {
       email: formData.email,
+      new: true,
       location: '',
       gender: '',
       age: '',
@@ -58,7 +61,13 @@ async function submitForm() {
     await setDoc(rejectsRef, { initialized: true });
 
 
-    await router.push('/profile');
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        router.push('/profile');
+        alert("You have successfully registered! Please fill out your profile to begin matching with others!");
+      }
+    });
+
     alert("You have successfully registered! Please fill out your profile to begin matching with others!")
   } catch (error: any) {
     formData.errorMessage = error.message ?? 'An unexpected error occurred.';

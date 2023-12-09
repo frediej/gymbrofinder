@@ -32,6 +32,12 @@ const router = createRouter({
             meta: {requiresAuth: true}
         },
         {
+            path: '/profile/edit',
+            name: 'ProfileEditView.vue',
+            component: () => import('@/views/ProfileEditView.vue'),
+            meta: {requiresAuth: true}
+        },
+        {
             path: '/search',
             name: 'search',
             component: () => import('../views/SearchView.vue'),
