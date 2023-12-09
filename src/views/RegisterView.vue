@@ -64,11 +64,9 @@ async function submitForm() {
     auth.onAuthStateChanged((user) => {
       if (user) {
         router.push('/profile');
-        alert("You have successfully registered! Please fill out your profile to begin matching with others!");
       }
     });
 
-    alert("You have successfully registered! Please fill out your profile to begin matching with others!")
   } catch (error: any) {
     formData.errorMessage = error.message ?? 'An unexpected error occurred.';
   } finally {

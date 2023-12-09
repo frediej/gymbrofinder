@@ -18,6 +18,9 @@ onMounted(async () => {
 
       if (userDocSnap.exists()) {
         userProfile.value = userDocSnap.data();
+        if (userProfile.value.new) {
+          await router.push('/profile/edit');
+        }
       } else {
         console.error('No such document!');
       }
