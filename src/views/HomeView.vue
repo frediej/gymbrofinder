@@ -22,8 +22,6 @@
 </script>
 
 <style scoped>
-/* styles*/
-
 .home-container {
   position: relative;
   height: 100vh;
