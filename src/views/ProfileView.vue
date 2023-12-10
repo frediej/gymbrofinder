@@ -18,7 +18,7 @@ onMounted(async () => {
 
       if (userDocSnap.exists()) {
         userProfile.value = userDocSnap.data();
-        if (userProfile.value.new) {
+        if (userProfile.value.new && router.currentRoute.value.path !== '/profile/edit') {
           await router.push('/profile/edit');
         }
       } else {

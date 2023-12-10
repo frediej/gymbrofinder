@@ -2,6 +2,8 @@
 import {ref, onMounted} from 'vue';
 import {useStore} from "@/stores/store";
 import UserCard from "@/components/UserCard.vue";
+import GymBroServices from "@/Services/GymBroServices";
+import {auth} from "@/js/firebase";
 
 const store = useStore();
 const filters = ref({
@@ -32,6 +34,7 @@ const ensureUsers = () => {
 
 const searchUsers = () => {
   searchResults.value = store.allUsers.filter(user => {
+    if (user.id === auth.currentUser.uid) return false;
     for (const key in filters.value) {
       const filterValue = filters.value[key];
       if (filterValue !== null && filterValue !== '' && user[key] !== filterValue) {
@@ -44,6 +47,31 @@ const searchUsers = () => {
   console.log(searchResults.value);
 };
 
+const resetSearch = () => {
+  filters.value = {
+    location: null,
+    gender: null,
+    age: null,
+    daysPerWeek: null,
+    workoutDuration: null,
+    benchWeight: null,
+    deadliftWeight: null,
+    squatWeight: null,
+    goals: null
+  };
+  showSearchContainer.value = true;
+  searchResults.value = [];
+}
+const connectUser = async (matchedUserId) => {
+  const currentUserId = auth.currentUser.uid;
+  try {
+    await GymBroServices.addMatch(currentUserId, matchedUserId);
+    alert("Connection interest saved! If the gymbro also likes you, you may find their full details in the matches tab!");
+  } catch (error) {
+    console.error('Error connecting users:', error);
+    alert("Error connecting users");
+  }
+}
 onMounted(() => {
   ensureUsers();
 });
@@ -122,10 +150,17 @@ onMounted(() => {
 
   <div v-if="searchResults.length" class="search-results">
     <h2>Search Results:</h2>
-    <UserCard v-for="user in searchResults" :key="user.id" :user="user" />
+    <UserCard v-for="user in searchResults" :key="user.id" :user="user" @connect="connectUser(user.id)"/>
+    <button @click="resetSearch" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+      Search Again
+    </button>
   </div>
-  <div v-else>
+
+  <div v-if="!showSearchContainer && !searchResults.length">
     <p>No results found.</p>
+    <button @click="resetSearch" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+      Search Again
+    </button>
   </div>
 </template>
 

@@ -6,6 +6,11 @@ export default {
       type: Object,
       required: true
     }
+  },
+  methods: {
+    connectUser() {
+      this.$emit('connect');
+    }
   }
 }
 </script>
@@ -26,7 +31,7 @@ export default {
       <li><strong>Line ID:</strong> {{ user.lineID }}</li>
     </ul>
     <div class="flex justify-between">
-      <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+      <button @click="connectUser" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
         Connect
       </button>
       <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
