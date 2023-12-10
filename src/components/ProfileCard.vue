@@ -12,6 +12,7 @@ export default {
 
 <template>
   <div class="max-w-sm rounded overflow-hidden shadow-lg bg-white p-4 mb-4 mx-2">
+    <h3 class="text-xl font-semibold mb-2">Name: {{ user.name }}</h3>
     <ul class="text-gray-700 text-base mb-4">
       <li><strong>Location:</strong> {{user.location}}</li>
       <li><strong>Gender:</strong> {{ user.gender }}</li>
@@ -78,21 +79,4 @@ export default {
   margin-bottom: 1rem;
 }
 
-.flex {
-  display: flex;
-}
-
-.justify-between {
-  justify-content: space-between;
-}
-
-.py-2 {
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-}
-
-.px-4 {
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
 </style>
