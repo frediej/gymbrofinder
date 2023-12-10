@@ -1,59 +1,148 @@
-<template>
-    <div class="search-container">
-      <h1>Search for Gym Buddies</h1>
-  
-      <div class="search-filters">
-        <label for="age">Age:</label>
-        <input v-model="filters.age" type="number">
-  
-        <!-- Add other filters here-->
-  
-        <button @click="searchUsers">Search</button>
-      </div>
-  
-      <!-- Displaying the results -->
-      <div v-if="searchResults.length > 0" class="search-results">
-        <h2>Search Results:</h2>
-        <ul>
-          <li v-for="user in searchResults" :key="user.id">
-            {{ user.email }} - Age: {{ user.age }}, Bench Weight: {{ user.benchWeight }}
-            <!-- Display other user information-->
-          </li>
-        </ul>
-      </div>
-      <div v-else>
-        <p>No results found.</p>
-      </div>
-    </div>
-  </template>
-  
-  <script setup>
-  import { ref } from 'vue';
-  import { db } from '@/js/firebase'; // Adjust the path based on your Firebase setup
-  
-  const filters = ref({
-    age: null,
-    // Add other filter fields as needed
-  });
-  
-  const searchResults = ref([]);
-  
-  const searchUsers = async () => {
-    try {
-      // Construct a query based on the applied filters
-      let query = db.collection('users');
-  
-      if (filters.value.age !== null) {
-        query = query.where('age', '==', filters.value.age);
+<script setup>
+import {ref, onMounted} from 'vue';
+import {useStore} from "@/stores/store";
+import UserCard from "@/components/UserCard.vue";
+
+const store = useStore();
+const filters = ref({
+  location: null,
+  gender: null,
+  age: null,
+  daysPerWeek: null,
+  workoutDuration: null,
+  benchWeight: null,
+  deadliftWeight: null,
+  squatWeight: null,
+  goals: null
+});
+
+const locations = ['Salaya', 'Nonthaburi', 'Sukhumvit', 'Asok', 'Thong Lo'];
+const genders = ['Male', 'Female', 'Other'];
+const ages = Array.from({ length: 87 }, (_, i) => i + 13);
+const daysPerWeek = Array.from({ length: 7 }, (_, i) => i + 1);
+const workoutDurations = ['0-1 hour', '1-2 hours', '2-3 hours', '3+ hours'];
+const goalsOptions = ['Lose Weight', 'Gain Muscle', 'Gain Strength'];
+const showSearchContainer = ref(true);
+const searchResults = ref([]);
+const ensureUsers = () => {
+  if (!store.allUsers.length){
+    store.fetchAllUsers();
+  }
+}
+
+const searchUsers = () => {
+  searchResults.value = store.allUsers.filter(user => {
+    for (const key in filters.value) {
+      const filterValue = filters.value[key];
+      if (filterValue !== null && filterValue !== '' && user[key] !== filterValue) {
+        return false;
       }
-      const querySnapshot = await query.get();
-      searchResults.value = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    } catch (error) {
-      console.error('Error searching users:', error.message);
     }
-  };
-  </script>
-  
-  <style scoped>
-  </style>
-  
+    return true;
+  });
+  showSearchContainer.value = false;
+  console.log(searchResults.value);
+};
+
+onMounted(() => {
+  ensureUsers();
+});
+
+</script>
+
+<template>
+  <div v-if="showSearchContainer" class="search-container">
+    <h1>Search for Gym Buddies</h1>
+
+    <div class="search-filters">
+      <div class="form-item">
+        <label for="location">Location:</label>
+        <select v-model="filters.location" id="location">
+          <option value="">Any</option>
+          <option v-for="location in locations" :key="location" :value="location">{{ location }}</option>
+        </select>
+      </div>
+
+      <div class="form-item">
+        <label for="gender">Gender:</label>
+        <select v-model="filters.gender" id="gender">
+          <option value="">Any</option>
+          <option v-for="gender in genders" :key="gender" :value="gender">{{ gender }}</option>
+        </select>
+      </div>
+
+      <div class="form-item">
+        <label for="age">Age:</label>
+        <select v-model="filters.age" id="age">
+          <option value="">Any</option>
+          <option v-for="age in ages" :key="age" :value="age">{{ age }}</option>
+        </select>
+      </div>
+
+      <div class="form-item">
+        <label for="daysPerWeek">Workouts per Week:</label>
+        <select v-model="filters.daysPerWeek" id="daysPerWeek">
+          <option value="">Any</option>
+          <option v-for="days in daysPerWeek" :key="days" :value="days">{{ days}}</option>
+        </select>
+      </div>
+
+      <div class="form-item">
+        <label for="workoutDuration">Workout Duration:</label>
+        <select v-model="filters.workoutDuration" id="workoutDuration">
+          <option value="">Any</option>
+          <option v-for="duration in workoutDurations" :key="duration" :value="duration">{{ duration }}</option>
+        </select>
+      </div>
+
+      <div class="form-item">
+        <label for="benchWeight">Bench Weight:</label>
+        <input v-model="filters.benchWeight" id="benchWeight" type="number" placeholder="Any" />
+      </div>
+      <div class="form-item">
+        <label for="deadliftWeight">Deadlift Weight:</label>
+        <input v-model="filters.deadliftWeight" id="deadliftWeight" type="number" placeholder="Any" />
+      </div>
+      <div class="form-item">
+        <label for="squatWeight">Squat Weight:</label>
+        <input v-model="filters.squatWeight" id="squatWeight" type="number" placeholder="Any" />
+      </div>
+
+      <div class="form-item">
+        <label for="goals">Goals:</label>
+        <select v-model="filters.goals" id="goals" multiple>
+          <option value="">Any</option>
+          <option v-for="goal in goalsOptions" :key="goal" :value="goal">{{ goal }}</option>
+        </select>
+      </div>
+
+      <button @click="searchUsers">Search</button>
+    </div>
+  </div>
+
+  <div v-if="searchResults.length" class="search-results">
+    <h2>Search Results:</h2>
+    <UserCard v-for="user in searchResults" :key="user.id" :user="user" />
+  </div>
+  <div v-else>
+    <p>No results found.</p>
+  </div>
+</template>
+
+<style scoped>
+/* ... existing styles ... */
+.form-item {
+  margin-bottom: 1rem;
+}
+
+.form-item label {
+  margin-bottom: 0.5rem;
+}
+
+.form-item select, .form-item input {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+</style>
+
