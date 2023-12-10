@@ -20,7 +20,7 @@
 <style scoped>
 .home-container {
   position: relative;
-  height: 100vh;
+  height: calc(100vh); /* Adjust the value based on your nav bar height */
   overflow: hidden;
 }
 
@@ -62,10 +62,34 @@
   color: #fff;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
 }
 
-.action-button:hover {
-  background-color: #fff;
-  color: #000;
+.action-button:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, transparent, rgba(206, 219, 93, 0.277));
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.5s ease-in-out;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.action-button:hover:before {
+  transform: scaleX(1);
+  transform-origin: left;
+  z-index: 2;
+}
+
+.action-button span {
+  position: relative;
+  z-index: 2;
 }
 </style>
