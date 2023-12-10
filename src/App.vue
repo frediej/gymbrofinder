@@ -24,7 +24,6 @@ const logout = () => {
       <div class="wrapper">
         <nav>
           <RouterLink to="/">Home</RouterLink>
-          <RouterLink to="/about">About</RouterLink>
           <RouterLink to="/search" v-if="user">Search</RouterLink>
           <RouterLink to="/matches" v-if="user">Matches</RouterLink>
           <RouterLink to="/profile" v-if="user">Profile</RouterLink>
