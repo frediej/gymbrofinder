@@ -52,7 +52,8 @@ async function submitForm() {
       deadliftWeight: '',
       squatWeight: '',
       workoutDuration: '',
-      goals: ''
+      goals: '',
+      lineID: ''
     });
 
     const matchesRef = doc(collection(userRef, 'matches'), 'placeholder');

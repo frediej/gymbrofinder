@@ -114,6 +114,10 @@ const saveProfile = async () => {
           <option v-for="goal in goalsOptions" :key="goal" :value="goal">{{ goal }}</option>
         </select>
       </div>
+      <div class="form-item">
+        <label for="lineID">Line ID:</label>
+        <input v-model="userProfile.lineID" id="lineID" type="text" />
+      </div>
       <button type="submit" @click="saveProfile">Save Profile</button>
     </form>
   </div>

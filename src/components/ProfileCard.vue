@@ -12,8 +12,8 @@ export default {
 
 <template>
   <div class="max-w-sm rounded overflow-hidden shadow-lg bg-white p-4">
-    <h3 class="text-xl font-semibold mb-2">Location: {{ user.location }}</h3>
     <ul class="text-gray-700 text-base mb-4">
+      <li><strong>Location:</strong> {{user.location}}</li>
       <li><strong>Gender:</strong> {{ user.gender }}</li>
       <li><strong>Age:</strong> {{ user.age }}</li>
       <li><strong>Workouts/Week:</strong> {{ user.daysPerWeek }}</li>
@@ -24,14 +24,6 @@ export default {
       <li><strong>Goals:</strong> {{ user.goals }}</li>
       <li><strong>Line ID:</strong> {{ user.lineID }}</li>
     </ul>
-    <div class="flex justify-between">
-      <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-        Connect
-      </button>
-      <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-        Reject
-      </button>
-    </div>
   </div>
 </template>
 

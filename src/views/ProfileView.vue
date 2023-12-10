@@ -3,7 +3,7 @@ import { ref, onMounted } from 'vue';
 import { auth, db } from '@/js/firebase';
 import { doc, getDoc } from "firebase/firestore";
 import {useRouter} from "vue-router";
-
+import ProfileCard from "@/components/ProfileCard.vue";
 const currentUser = ref(null);
 const userProfile = ref({});
 const router = useRouter();
@@ -41,18 +41,8 @@ const editProfile = () => {
 
 <template>
   <div class="usersettings">
-    <h1>User Settings</h1>
     <div v-if="currentUser">
-      <p>Current user: {{ currentUser.email }}</p>
-      <p>Location: {{ userProfile.location }}</p>
-      <p>Gender: {{ userProfile.gender }}</p>
-      <p>Age: {{ userProfile.age }}</p>
-      <p>Days per week: {{ userProfile.daysPerWeek }}</p>
-      <p>Workout duration: {{ userProfile.workoutDuration }}</p>
-      <p>Bench weight: {{ userProfile.benchWeight }}kg</p>
-      <p>Deadlift weight: {{ userProfile.deadliftWeight }}kg</p>
-      <p>Squat weight: {{ userProfile.squatWeight }}kg</p>
-      <p>Goals: {{ userProfile.goals }}</p>
+      <profile-card :user="userProfile"></profile-card>
       <button @click="editProfile">Edit Profile</button>
 
     </div>
