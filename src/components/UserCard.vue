@@ -10,6 +10,9 @@ export default {
   methods: {
     connectUser() {
       this.$emit('connect');
+    },
+    rejectUser() {
+      this.$emit('reject');
     }
   }
 }
@@ -34,7 +37,7 @@ export default {
       <button @click="connectUser" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
         Connect
       </button>
-      <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+      <button @click="rejectUser" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
         Reject
       </button>
     </div>
