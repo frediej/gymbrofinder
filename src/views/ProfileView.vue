@@ -48,10 +48,10 @@ const editProfile = () => {
       <p>Gender: {{ userProfile.gender }}</p>
       <p>Age: {{ userProfile.age }}</p>
       <p>Days per week: {{ userProfile.daysPerWeek }}</p>
-      <p>Bench weight: {{ userProfile.benchWeight }}</p>
-      <p>Deadlift weight: {{ userProfile.deadliftWeight }}</p>
-      <p>Squat weight: {{ userProfile.squatWeight }}</p>
       <p>Workout duration: {{ userProfile.workoutDuration }}</p>
+      <p>Bench weight: {{ userProfile.benchWeight }}kg</p>
+      <p>Deadlift weight: {{ userProfile.deadliftWeight }}kg</p>
+      <p>Squat weight: {{ userProfile.squatWeight }}kg</p>
       <p>Goals: {{ userProfile.goals }}</p>
       <button @click="editProfile">Edit Profile</button>
 

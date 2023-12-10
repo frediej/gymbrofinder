@@ -2,10 +2,11 @@
 import {ref} from 'vue'
 import { auth } from '@/js/firebase'
 import { signInWithEmailAndPassword } from 'firebase/auth'
-import router from '@/router/index.js'
+import {useRouter} from "vue-router";
 
 const email = ref(null)
 const password = ref(null)
+const router = useRouter();
 
 function login () {
   console.log("Login : " + email.value + " : " + password.value);
@@ -15,7 +16,7 @@ function login () {
         const user = userCredential.user;
         console.log(user)
         console.log(userCredential)
-        router.push('/books')
+        router.push('/')
       })
       .catch((error) => {
         const errorCode = error.code;
