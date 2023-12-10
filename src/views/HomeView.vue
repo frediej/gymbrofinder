@@ -1,24 +1,20 @@
 <template>
   <div class="home-container">
-    <img src="https://assets-global.website-files.com/61f6a1f670934ed39d548853/64a6b282d856f4f9d563997d_Gym%20people.webp" alt="Gym People Image" class="background-image">
+    <img src="@/assets/homebackgground.jpg" alt="Gym People Image" class="background-image">
 
     <div class="content-overlay">
       <h1 class="welcome-text">Welcome to GymBroFinder!</h1>
       <p class="description-text">Connect with workout buddies and achieve your fitness goals together.</p>
 
-      <router-link to="/login">
-        <button class="action-button">Login</button>
-      </router-link>
-
-      <router-link to="/register">
-        <button class="action-button">Register</button>
+      <router-link :to="user === null ? '/login' : '/search'">
+        <button class="action-button">Find a gym buddy now</button>
       </router-link>
     </div>
   </div>
 </template>
 
 <script setup>
-// logic
+// setup
 </script>
 
 <style scoped>
