@@ -12,8 +12,8 @@ export default {
 
 <template>
   <div class="max-w-sm rounded overflow-hidden shadow-lg bg-white p-4">
+    <h3 class="text-xl font-semibold mb-2">Name: {{ user.name }}</h3>
     <ul class="text-gray-700 text-base mb-4">
-      <li><strong>Name:</strong> {{user.name}}</li>
       <li><strong>Location:</strong> {{user.location}}</li>
       <li><strong>Gender:</strong> {{ user.gender }}</li>
       <li><strong>Age:</strong> {{ user.age }}</li>
