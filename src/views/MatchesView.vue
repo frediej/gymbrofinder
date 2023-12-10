@@ -13,30 +13,56 @@ onMounted(async () => {
 </script>
 
 <template>
+  <div class="matches-container">
     <div class="matches">
-      <h1>Matches</h1>
-      <div v-if="matches.length" class="matches-container">
+      <h1 class="text-3xl font-bold mb-4">Matches</h1>
+      <div v-if="matches.length" class="flex flex-wrap -mx--100">
         <ProfileCard v-for="match in matches" :key="match.id" :user="match" />
       </div>
       <div v-else>
-        <p>No gymbros yet!</p>
+        <p class="text-xl">No gymbros yet!</p>
       </div>
     </div>
-  </template>
+  </div>
+</template>
 
-  <style scoped>
-  .matches {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-  }
+<style scoped>
+.matches-container {
+  max-width: 100000px;
+  max-height: 100000vh;
+  padding: 11vh;
+  background: #1D1B1C;
+  color: white;
+}
 
-  .matches-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1rem;
-  }
-  </style>
+.matches {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.matches h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: rgb(255, 255, 255);
+}
+
+.matches-container .flex {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.matches-container .flex .ProfileCard {
+  flex: 0 0 48%;
+  margin-bottom: 1rem;
+  margin: 0.2rem;
+}
+
+.text-xl {
+  font-size: 1.5rem;
+}
+
+</style>

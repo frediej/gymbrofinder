@@ -20,7 +20,7 @@
 <style scoped>
 .home-container {
   position: relative;
-  height: calc(100vh); /* Adjust the value based on your nav bar height */
+  height: calc(100vh);
   overflow: hidden;
 }
 

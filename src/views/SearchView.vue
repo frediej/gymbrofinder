@@ -95,105 +95,166 @@ onMounted(() => {
 </script>
 
 <template>
-  <div v-if="showSearchContainer" class="search-container">
-    <h1>Search for Gym Buddies</h1>
+  <div class="search-container">
+    <div v-if="showSearchContainer" class="search-container">
+      <h1 class="text-3xl font-bold mb-4">Search for Gym Buddies</h1>
 
-    <div class="search-filters">
-      <div class="form-item">
-        <label for="location">Location:</label>
-        <select v-model="filters.location" id="location">
-          <option value="">Any</option>
-          <option v-for="location in locations" :key="location" :value="location">{{ location }}</option>
-        </select>
-      </div>
+      <div class="search-filters">
+        <div class="form-item">
+          <label for="location">Location:</label>
+          <select v-model="filters.location" id="location">
+            <option value="">Any</option>
+            <option v-for="location in locations" :key="location" :value="location">{{ location }}</option>
+          </select>
+        </div>
 
-      <div class="form-item">
-        <label for="gender">Gender:</label>
-        <select v-model="filters.gender" id="gender">
-          <option value="">Any</option>
-          <option v-for="gender in genders" :key="gender" :value="gender">{{ gender }}</option>
-        </select>
-      </div>
+        <div class="form-item">
+          <label for="gender">Gender:</label>
+          <select v-model="filters.gender" id="gender">
+            <option value="">Any</option>
+            <option v-for="gender in genders" :key="gender" :value="gender">{{ gender }}</option>
+          </select>
+        </div>
 
-      <div class="form-item">
-        <label for="age">Age:</label>
-        <select v-model="filters.age" id="age">
-          <option value="">Any</option>
-          <option v-for="age in ages" :key="age" :value="age">{{ age }}</option>
-        </select>
-      </div>
+        <div class="form-item">
+          <label for="age">Age:</label>
+          <select v-model="filters.age" id="age">
+            <option value="">Any</option>
+            <option v-for="age in ages" :key="age" :value="age">{{ age }}</option>
+          </select>
+        </div>
 
-      <div class="form-item">
-        <label for="daysPerWeek">Workouts per Week:</label>
-        <select v-model="filters.daysPerWeek" id="daysPerWeek">
-          <option value="">Any</option>
-          <option v-for="days in daysPerWeek" :key="days" :value="days">{{ days}}</option>
-        </select>
-      </div>
+        <div class="form-item">
+          <label for="daysPerWeek">Workouts per Week:</label>
+          <select v-model="filters.daysPerWeek" id="daysPerWeek">
+            <option value="">Any</option>
+            <option v-for="days in daysPerWeek" :key="days" :value="days">{{ days}}</option>
+          </select>
+        </div>
 
-      <div class="form-item">
-        <label for="workoutDuration">Workout Duration:</label>
-        <select v-model="filters.workoutDuration" id="workoutDuration">
-          <option value="">Any</option>
-          <option v-for="duration in workoutDurations" :key="duration" :value="duration">{{ duration }}</option>
-        </select>
-      </div>
+        <div class="form-item">
+          <label for="workoutDuration">Workout Duration:</label>
+          <select v-model="filters.workoutDuration" id="workoutDuration">
+            <option value="">Any</option>
+            <option v-for="duration in workoutDurations" :key="duration" :value="duration">{{ duration }}</option>
+          </select>
+        </div>
 
-      <div class="form-item">
-        <label for="benchWeight">Bench Weight:</label>
-        <input v-model="filters.benchWeight" id="benchWeight" type="number" placeholder="Any" />
-      </div>
-      <div class="form-item">
-        <label for="deadliftWeight">Deadlift Weight:</label>
-        <input v-model="filters.deadliftWeight" id="deadliftWeight" type="number" placeholder="Any" />
-      </div>
-      <div class="form-item">
-        <label for="squatWeight">Squat Weight:</label>
-        <input v-model="filters.squatWeight" id="squatWeight" type="number" placeholder="Any" />
-      </div>
+        <div class="form-item">
+          <label for="benchWeight">Bench Weight:</label>
+          <input v-model="filters.benchWeight" id="benchWeight" type="number" placeholder="Any" />
+        </div>
+        <div class="form-item">
+          <label for="deadliftWeight">Deadlift Weight:</label>
+          <input v-model="filters.deadliftWeight" id="deadliftWeight" type="number" placeholder="Any" />
+        </div>
+        <div class="form-item">
+          <label for="squatWeight">Squat Weight:</label>
+          <input v-model="filters.squatWeight" id="squatWeight" type="number" placeholder="Any" />
+        </div>
 
-      <div class="form-item">
-        <label for="goals">Goals:</label>
-        <select v-model="filters.goals" id="goals" multiple>
-          <option value="">Any</option>
-          <option v-for="goal in goalsOptions" :key="goal" :value="goal">{{ goal }}</option>
-        </select>
-      </div>
+        <div class="form-item">
+          <label for="goals">Goals:</label>
+          <select v-model="filters.goals" id="goals" multiple>
+            <option value="">Any</option>
+            <option v-for="goal in goalsOptions" :key="goal" :value="goal">{{ goal }}</option>
+          </select>
+        </div>
 
-      <button @click="searchUsers">Search</button>
+        <button @click="searchUsers" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+          Search
+        </button>
+      </div>
     </div>
-  </div>
 
-  <div v-if="searchResults.length" class="search-results">
-    <h2>Search Results:</h2>
-    <UserCard v-for="user in searchResults" :key="user.id" :user="user" @connect="connectUser(user.id)" @reject="rejectUser(user.id)"/>
-    <button @click="resetSearch" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-      Search Again
-    </button>
-  </div>
+    <div v-if="searchResults.length" class="search-results mt-8">
+      <h2 class="text-2xl font-bold mb-4">Search Results:</h2>
+      <div class="flex flex-wrap -mx--100">
+        <UserCard v-for="user in searchResults" :key="user.id" :user="user" @connect="connectUser(user.id)" @reject="rejectUser(user.id)"/>
+      </div>
+      <button @click="resetSearch" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        Search Again
+      </button>
+    </div>
 
-  <div v-if="!showSearchContainer && !searchResults.length">
-    <p>No results found.</p>
-    <button @click="resetSearch" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-      Search Again
-    </button>
+    <div v-if="!showSearchContainer && !searchResults.length" class="mt-8">
+      <p class="text-xl">No results found.</p>
+      <button @click="resetSearch" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        Search Again
+      </button>
+    </div>
   </div>
 </template>
 
 <style scoped>
-/* ... existing styles ... */
-.form-item {
+.search-container {
+  max-width: 100000px;
+  max-height: 100000vh;
+  padding: 11vh;
+  background:#1D1B1C;
+}
+
+.search-container h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
   margin-bottom: 1rem;
+  color:white;
+}
+
+.search-filters {
+  display: flex;
+  flex-wrap: wrap;
+  color: white;
+}
+
+.form-item {
+  flex: 0 0 48%; 
+  margin-bottom: 1rem;
+  margin: 0.2rem;
 }
 
 .form-item label {
-  margin-bottom: 0.5rem;
+  display: block;
+  margin-bottom: 0.2rem;
 }
 
-.form-item select, .form-item input {
+  .text-2xl {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+  }
+
+.form-item select,
+.form-item input {
+  width: 100%;
   padding: 0.5rem;
   border: 1px solid #ccc;
   border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.search-filters button {
+  display: inline-block;
+  color: black;
+  font-weight: bold;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.search-filters button:hover {
+  background-color: #c8d724;
+}
+
+.search-results {
+  margin-top: 20px;
+}
+
+.search-results h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
 }
 </style>
-

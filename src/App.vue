@@ -60,7 +60,6 @@ nav {
   z-index: 1000;
   background-color: transparent;
   padding: 10px;
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
 }
 
 nav a,
@@ -73,11 +72,11 @@ nav button {
   position: relative;
   overflow: hidden;
   transition: color 0.3s ease;
-  white-space: nowrap; /* so it's all in one line*/
+  white-space: nowrap;
+  background-color: transparent;
 }
 
-nav a:after,
-nav button:after {
+nav a:after {
   content: "";
   position: absolute;
   left: 0;
@@ -85,6 +84,19 @@ nav button:after {
   width: 100%;
   height: 3px;
   background-color: rgb(206, 219, 93);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+}
+
+nav button:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 3px;
+  background-color: rgb(219, 128, 93);
   transform: scaleX(0);
   transform-origin: right;
   transition: transform 0.3s ease;

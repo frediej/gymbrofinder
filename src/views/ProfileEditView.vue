@@ -63,6 +63,7 @@ const saveProfile = async () => {
 </script>
 
 <template>
+  <div class="profile-container">
   <div class="profile-edit">
     <h1>Edit Profile</h1>
     <form @submit.prevent="saveProfile">
@@ -125,21 +126,66 @@ const saveProfile = async () => {
       <button type="submit" @click="saveProfile">Save Profile</button>
     </form>
   </div>
+</div>
 </template>
 
 <style>
-/* Add your styles here */
-.form-item {
-  margin-bottom: 1rem;
+.profile-container {
+  height: 250vh;
+  background: linear-gradient(180deg, #1D1B1C 0%, #000000 100%);
+  display: flex;
+  padding: 70px;
+  flex-direction: row;
+  align-items: left;
+  justify-content: left;
 }
 
-.form-item label {
+.profile-edit {
+  width: 80%; 
+  max-width: 600px;
+  padding: 20px;
+  height: 65%;
+  border-radius: 10px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+  background: white;
+}
+
+h1 {
+  font-size: 1.2rem;
+  margin-bottom: 0rem;
+}
+
+.form-item {
   margin-bottom: 0.5rem;
 }
 
-.form-item input {
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+label {
+  font-size: 1rem;
+  margin-bottom: 0.1rem;
+}
+
+input,
+select {
+  padding: 0.2rem;
+  width: 100%;
+  border: 1px solid #333;
+  border-radius: 5px;
+}
+
+button {
+  padding: 0.75rem 2rem;
+  background-color: #333;
+  color: #1D1B1C;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: rgb(206, 219, 93);
+}
+
+.save-button {
+  margin-top: 20px;
 }
 </style>

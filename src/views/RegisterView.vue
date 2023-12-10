@@ -84,6 +84,7 @@ function resetForm() {
 
 
 <template>
+  <div class="profile-container">
   <div class="register">
     <h1>Register</h1>
     <form @submit.prevent="submitForm">
@@ -104,21 +105,34 @@ function resetForm() {
       </div>
     </form>
   </div>
+</div>
 </template>
 
 <style scoped>
+
+.profile-container {
+  height: 100vh;
+  background: linear-gradient(180deg, #1D1B1C 0%, #000000 100%);
+  display: flex;
+  flex-direction: row;
+  align-items: left;
+  justify-content: flex-start;
+  padding: 100px;
+}
+
 .register {
   max-width: 400px;
+  height: 400px;
   margin: 2rem auto;
-  padding: 2rem;
-  border-radius: 8px;
+  padding: 3rem;
+  border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  background-color: #fff;
+  background: linear-gradient(135deg, #c8b844, #cf4343);
+  color: #fff;
 }
 
 h1 {
   text-align: center;
-  color: #333;
   font-size: 2rem;
   margin-bottom: 1.5rem;
 }
@@ -132,7 +146,6 @@ h1 {
 .form-item label {
   margin-bottom: 0.5rem;
   font-size: 1rem;
-  color: #555;
 }
 
 .form-item input {
@@ -141,6 +154,7 @@ h1 {
   border-radius: 4px;
   font-size: 1rem;
   color: #333;
+  background-color: #fff;
 }
 
 .form-item input:focus {
@@ -167,6 +181,7 @@ button[type="submit"] {
   background-color: #007bff;
   color: #fff;
   margin-right: 0.5rem;
+  max-width: 200px;
 }
 
 button[type="submit"]:hover {
@@ -181,10 +196,12 @@ button[disabled] {
 button:not([type="submit"]) {
   background-color: #6c757d;
   color: #fff;
+  max-width: 200px;
 }
 
 button:not([type="submit"]):hover {
   background-color: #5a6268;
 }
 </style>
+
 

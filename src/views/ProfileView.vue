@@ -40,12 +40,37 @@ const editProfile = () => {
 </script>
 
 <template>
-  <div class="usersettings">
+  <div class="profile-container">
     <div v-if="currentUser">
-      <profile-card :user="userProfile"></profile-card>
-      <button @click="editProfile">Edit Profile</button>
-
+      <ProfileCard :user="userProfile" />
+      <button @click="editProfile" class="edit-button">Edit Profile</button>
     </div>
   </div>
 </template>
 
+<style scoped>
+.profile-container {
+  height: 100vh;
+  background: linear-gradient(180deg, #1D1B1C 0%, #000000 100%);
+  display: flex;
+  flex-direction: row;
+  align-items: left;
+  justify-content: flex-start;
+  padding: 100px;
+}
+
+.edit-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #fff;
+  color: #1D1B1C;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.edit-button:hover {
+  background-color: rgb(206, 219, 93);
+}
+</style>
