@@ -54,7 +54,7 @@ const saveProfile = async () => {
   const userDocRef = doc(db, 'users', currentUser.value.uid);
   try {
     await updateDoc(userDocRef, userProfile);
-    alert("Profile updated successfully!");
+    await updateDoc(userDocRef, { ...userProfile, new: false });
     router.push('/profile');
   } catch (error) {
     console.error('Error updating document:', error);
@@ -66,6 +66,10 @@ const saveProfile = async () => {
   <div class="profile-edit">
     <h1>Edit Profile</h1>
     <form @submit.prevent="saveProfile">
+      <div class="form-item">
+        <label for="name">Name:</label>
+        <input v-model="userProfile.name" id="name" type="text"/>
+      </div>
       <div class="form-item">
         <label for="location">Location:</label>
         <select v-model="userProfile.location" id="location">

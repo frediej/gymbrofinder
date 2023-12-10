@@ -93,7 +93,7 @@ function resetForm() {
       </div>
       <div class="form-item">
         <label for="password">Password</label>
-        <input v-model="formData.password" id="password" type="password" />
+        <input v-model="formData.password" id="password" type="password" @keyup.enter="submitForm" />
       </div>
       <p v-if="formData.errorMessage" class="error-message">{{ formData.errorMessage }}</p>
       <div class="form-item">
