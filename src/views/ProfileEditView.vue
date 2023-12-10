@@ -128,7 +128,7 @@ const saveProfile = async () => {
 </template>
 
 <style>
-/* Add your styles here */
+
 .form-item {
   margin-bottom: 1rem;
 }
